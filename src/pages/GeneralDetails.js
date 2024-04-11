@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
+import CheckBox from "../components/CheckBox";
 
 const GeneralDetails = () => {
   const [restName, setRestName] = useState("");
@@ -10,7 +11,7 @@ const GeneralDetails = () => {
   const [lowestPrice, setLowestPrice] = useState("");
   const [highestPrice, setHighestPrice] = useState("");
   const [rating, setRating] = useState("");
-
+  const [features, setFeatures] = useState([]);
   const handlePost = (event) => {
     event.preventDefault();
     const resturauntInfo = {
@@ -21,11 +22,25 @@ const GeneralDetails = () => {
       lowestPrice: lowestPrice,
       highestPrice: highestPrice,
       ratings: rating,
+      features: features,
     };
 
     console.log(resturauntInfo);
     event.target.reset();
   };
+
+  const handleCheckbox = (event) => {
+    if (event.target.checked) {
+      setFeatures([...features, event.target.value.toString()]);
+    } else {
+      const removedFeatures = features.filter(
+        (feature) => feature !== event.target.value.toString()
+      );
+      setFeatures(removedFeatures);
+    }
+    //console.log(features);
+  };
+
   return (
     <div className=" my-5 flex flex-col px-2 gap-2">
       <form onSubmit={(e) => handlePost(e)}>
@@ -75,6 +90,23 @@ const GeneralDetails = () => {
           width={10}
           onChangeFn={setRating}
         />
+        <div className=" flex flex-col items-start">
+          <div className=" text-start font-bold p-2">
+            <p>Features and Services:</p>
+          </div>
+          <div className=" grid grid-cols-1 lg:grid-cols-2 gap-2">
+            <CheckBox
+              label={"New thang"}
+              value={"whhof1"}
+              chngFn={handleCheckbox}
+            ></CheckBox>
+            <CheckBox
+              label={"New thang"}
+              value={"whhof2"}
+              chngFn={handleCheckbox}
+            ></CheckBox>
+          </div>
+        </div>
         <CustomButton
           title={"Add Resturaunt"}
           type={"submit"}

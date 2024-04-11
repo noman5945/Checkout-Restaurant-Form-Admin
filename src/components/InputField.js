@@ -13,7 +13,9 @@ const InputField = ({
         width ? width : 400
       }px] ${customstyles}`}
     >
-      <label className=" ms-2">{title ? title : "Pass a title"}</label>
+      <label className=" font-bold ms-2">
+        {title ? title : "Pass a title"}
+      </label>
       <input
         placeholder={placeholder ? placeholder : title}
         required
