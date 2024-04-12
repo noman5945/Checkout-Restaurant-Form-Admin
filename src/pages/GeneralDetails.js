@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
 import CheckBox from "../components/CheckBox";
+import { Features, FoodTypes } from "../constants/constants";
 
 const GeneralDetails = () => {
   const [restName, setRestName] = useState("");
@@ -12,6 +13,8 @@ const GeneralDetails = () => {
   const [highestPrice, setHighestPrice] = useState("");
   const [rating, setRating] = useState("");
   const [features, setFeatures] = useState([]);
+  const [foodTypes, setFoodTypes] = useState([]);
+
   const handlePost = (event) => {
     event.preventDefault();
     const resturauntInfo = {
@@ -23,6 +26,7 @@ const GeneralDetails = () => {
       highestPrice: highestPrice,
       ratings: rating,
       features: features,
+      mainFoods: foodTypes,
     };
 
     console.log(resturauntInfo);
@@ -39,6 +43,17 @@ const GeneralDetails = () => {
       setFeatures(removedFeatures);
     }
     //console.log(features);
+  };
+
+  const handleFoodCheckbox = (event) => {
+    if (event.target.checked) {
+      setFoodTypes([...foodTypes, event.target.value.toString()]);
+    } else {
+      const removedFoodType = foodTypes.filter(
+        (foodtype) => foodtype !== event.target.value.toString()
+      );
+      setFoodTypes(removedFoodType);
+    }
   };
 
   return (
@@ -95,16 +110,29 @@ const GeneralDetails = () => {
             <p>Features and Services:</p>
           </div>
           <div className=" grid grid-cols-1 lg:grid-cols-2 gap-2">
-            <CheckBox
-              label={"New thang"}
-              value={"whhof1"}
-              chngFn={handleCheckbox}
-            ></CheckBox>
-            <CheckBox
-              label={"New thang"}
-              value={"whhof2"}
-              chngFn={handleCheckbox}
-            ></CheckBox>
+            {Features.map((feature, index) => (
+              <CheckBox
+                key={index}
+                label={feature.label}
+                value={feature.value}
+                chngFn={handleCheckbox}
+              ></CheckBox>
+            ))}
+          </div>
+        </div>
+        <div className=" flex flex-col items-start">
+          <div className=" text-start font-bold p-2">
+            <p>Popular Food Types:</p>
+          </div>
+          <div className=" grid grid-cols-1 lg:grid-cols-2 gap-2">
+            {FoodTypes.map((foodtype, index) => (
+              <CheckBox
+                key={index}
+                label={foodtype.label}
+                value={foodtype.value}
+                chngFn={handleFoodCheckbox}
+              ></CheckBox>
+            ))}
           </div>
         </div>
         <CustomButton
