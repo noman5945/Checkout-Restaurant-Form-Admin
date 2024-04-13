@@ -5,7 +5,6 @@ What this site do? <br> - Takes all necessary information about a restaurant by 
 Works left-
 
 <ul>
-    <li>Add Food Menu Section</li>
     <li>Add Features Section</li>
     <li>Authentication (Admin/Agent)</li>
     <li>MongoDB api integration for adding to database</li>
