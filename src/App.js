@@ -1,9 +1,10 @@
-import GeneralDetails from "./pages/GeneralDetails";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./Routes/Routes";
 
 function App() {
   return (
-    <div className=" flex flex-col items-center">
-      <GeneralDetails></GeneralDetails>
+    <div>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }

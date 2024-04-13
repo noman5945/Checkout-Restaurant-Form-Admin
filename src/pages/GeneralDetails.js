@@ -12,6 +12,7 @@ const GeneralDetails = () => {
   const [lowestPrice, setLowestPrice] = useState("");
   const [highestPrice, setHighestPrice] = useState("");
   const [rating, setRating] = useState("");
+  const [workTime, setWorkTime] = useState("");
   const [features, setFeatures] = useState([]);
   const [foodTypes, setFoodTypes] = useState([]);
 
@@ -27,6 +28,7 @@ const GeneralDetails = () => {
       ratings: rating,
       features: features,
       mainFoods: foodTypes,
+      workTime: workTime,
     };
 
     console.log(resturauntInfo);
@@ -70,6 +72,12 @@ const GeneralDetails = () => {
           width={600}
           onChangeFn={setLocation}
           placeholder={"e.g Mohammadpur"}
+        />
+        <InputField
+          title={"Working Time"}
+          width={600}
+          onChangeFn={setWorkTime}
+          placeholder={"e.g Day or Night"}
         />
         <div className=" flex flex-row gap-3">
           <InputField
