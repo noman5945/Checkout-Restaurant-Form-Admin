@@ -15,12 +15,16 @@ const FoodMenu = () => {
       foodPrice: foodprice,
     };
     setFoodMenu([...foodMenu, foodItem]);
+  };
+  /**
+   * Add to Database with given resturaunt ID
+   */
+  const addFoodMenu = () => {
     console.log(foodMenu);
   };
-
   return (
-    <div className=" flex flex-col">
-      <p className=" font-bold text-xl">Food Menu</p>
+    <div className=" flex flex-col py-2">
+      <p className=" font-bold text-xl text-center py-2">Food Menu</p>
       <div id="food-item-list" className="input-food">
         <div id="food-item">
           <InputFood
@@ -37,16 +41,28 @@ const FoodMenu = () => {
           btnFn={addToMenu}
         />
       </div>
-
-      {foodMenu.map((item, index) => (
-        <div key={index} className=" flex flex-col ">
-          <div className=" flex flex-row gap-4">
-            <div>{item.foodName}</div>
-            <div>{item.foodType}</div>
-            <div>{item.foodPrice}</div>
-          </div>
+      <div className=" flex flex-col ">
+        <p className=" text-lg font-semibold py-2">Added Foods in the Menu</p>
+        <div className=" flex flex-row ">
+          <div className="w-[25vw] lg:w-[15vw]">Food Name</div>
+          <div className="w-[25vw] lg:w-[15vw]">Food Type</div>
+          <div className="w-[25vw] lg:w-[15vw]">Price (Tk)</div>
         </div>
-      ))}
+        {foodMenu.map((item, index) => (
+          <div key={index} className=" flex flex-row  bg-platinum gap-1">
+            <div className="w-[25vw] lg:w-[15vw] p-1 border-2 border-spacing-2 border-black py-1">
+              <p className=" overflow-x-auto">{item.foodName}</p>
+            </div>
+            <div className="w-[25vw] lg:w-[15vw] p-1 border-2 border-spacing-2 border-black py-1">
+              <p className=" overflow-x-auto">{item.foodType}</p>
+            </div>
+            <div className="w-[25vw] lg:w-[15vw] p-1 border-2 border-spacing-2 border-black py-1">
+              <p className=" overflow-x-auto">{item.foodPrice}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <CustomButton title={"Add Menu"} type={"button"} btnFn={addFoodMenu} />
     </div>
   );
 };
