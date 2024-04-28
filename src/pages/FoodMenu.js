@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import InputFood from "../components/InputFood";
 import CustomButton from "../components/CustomButton";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const FoodMenu = () => {
   const [foodName, setFoodName] = useState("");
   const [foodType, setFoodtype] = useState("");
   const [foodprice, setFoodPrice] = useState("");
   const [foodMenu, setFoodMenu] = useState([]);
-
+  const { state } = useLocation();
+  const { new_rest_ID } = state;
+  const navigation = useNavigate();
+  /**
+   * add individual food to array
+   */
   const addToMenu = () => {
     const foodItem = {
       foodName: foodName,
       foodType: foodType,
-      foodPrice: foodprice,
+      foodPrice: parseInt(foodprice),
     };
     setFoodMenu([...foodMenu, foodItem]);
   };
@@ -20,7 +26,23 @@ const FoodMenu = () => {
    * Add to Database with given resturaunt ID
    */
   const addFoodMenu = () => {
-    console.log(foodMenu);
+    const menu = {
+      rest_ID: new_rest_ID,
+      menu_list: foodMenu,
+    };
+    fetch("http://localhost:5000/addfoodmenu", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(menu),
+    })
+      .then((response) => response.json())
+      .then((_id) => {
+        if (_id.acknowledged) {
+          navigation("/social", { state: { new_rest_ID: new_rest_ID } });
+        }
+      });
   };
   return (
     <div className=" flex flex-col py-2">

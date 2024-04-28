@@ -3,6 +3,7 @@ import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
 import CheckBox from "../components/CheckBox";
 import { Features, FoodTypes } from "../constants/constants";
+import { useNavigate } from "react-router-dom";
 
 const GeneralDetails = () => {
   const [restName, setRestName] = useState("");
@@ -15,23 +16,42 @@ const GeneralDetails = () => {
   const [workTime, setWorkTime] = useState("");
   const [features, setFeatures] = useState([]);
   const [foodTypes, setFoodTypes] = useState([]);
+  const navigate = useNavigate();
 
   const handlePost = (event) => {
     event.preventDefault();
-    const resturauntInfo = {
-      name: restName,
-      location: location,
-      opening: startTime,
-      closing: closeTime,
-      lowestPrice: lowestPrice,
-      highestPrice: highestPrice,
-      ratings: rating,
-      features: features,
-      mainFoods: foodTypes,
-      workTime: workTime,
-    };
+    try {
+      const lowestPriceInt = parseInt(lowestPrice);
+      const highestPriceInt = parseInt(highestPrice);
+      const resturauntInfo = {
+        name: restName,
+        location: location,
+        opening: startTime,
+        closing: closeTime,
+        lowestPrice: lowestPriceInt,
+        highestPrice: highestPriceInt,
+        ratings: rating,
+        features: features,
+        mainFoods: foodTypes,
+        workTime: workTime,
+      };
+      fetch("http://localhost:5000/addrestaurant", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resturauntInfo),
+      })
+        .then((response) => response.json())
+        .then((_id) => {
+          if (_id.acknowledged) {
+            navigate("/foodmenu", { state: { new_rest_ID: _id.insertedId } });
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
 
-    console.log(resturauntInfo);
     event.target.reset();
   };
 
