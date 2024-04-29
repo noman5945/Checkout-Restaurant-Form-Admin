@@ -6,6 +6,7 @@ const InputField = ({
   width,
   onChangeFn,
   placeholder,
+  textType,
 }) => {
   return (
     <div
@@ -21,6 +22,7 @@ const InputField = ({
         required
         className=" border-2 bg-slate-50 rounded-lg w-full h-[35px] p-3 focus:outline-none focus:ring focus:border-blue-500"
         onChange={(e) => onChangeFn(e.target.value)}
+        type={textType ? textType : "text"}
       ></input>
     </div>
   );
