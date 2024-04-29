@@ -80,6 +80,9 @@ const GeneralDetails = () => {
 
   return (
     <div className=" my-5 flex flex-col px-2 gap-2">
+      <div className=" text-center font-bold text-xl">
+        <h2>General Information</h2>
+      </div>
       <form onSubmit={(e) => handlePost(e)}>
         <InputField
           title={"Restaurant Name"}
