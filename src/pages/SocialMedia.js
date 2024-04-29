@@ -9,6 +9,7 @@ const SocialMedia = () => {
   const [instagram, setInstagram] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [openModal, setOpenModal] = useState(false);
   const { state } = useLocation();
   const { new_rest_ID } = state;
 
@@ -31,6 +32,7 @@ const SocialMedia = () => {
       .then((response) => response.json())
       .then((finalize) => {
         if (finalize.acknowledged) {
+          setOpenModal(true);
         }
       });
     event.target.reset();
@@ -75,7 +77,12 @@ const SocialMedia = () => {
           </form>
         </div>
       </div>
-      <CustomModal />
+      <CustomModal isVisible={openModal} closeFn={() => setOpenModal(false)}>
+        <div className=" flex flex-col items-center">
+          <h2>Thank you for your contribution</h2>
+          <CustomButton title={"OK"} btnFn={() => setOpenModal(false)} />
+        </div>
+      </CustomModal>
     </>
   );
 };
