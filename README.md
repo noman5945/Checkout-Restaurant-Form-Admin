@@ -6,5 +6,5 @@ Works left-
 
 <ul>
     <li>Authentication (Admin/Agent)</li>
-    <li>MongoDB api integration for adding to database</li>
+    
 </ul>
