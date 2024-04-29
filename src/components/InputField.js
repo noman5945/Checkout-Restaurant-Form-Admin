@@ -9,9 +9,9 @@ const InputField = ({
 }) => {
   return (
     <div
-      className={` flex flex-col items-start my-2 w-[${
+      className={` flex flex-col items-start my-2  lg:w-[${
         width ? width : 400
-      }px] ${customstyles}`}
+      }px] ${customstyles ? customstyles : ""}`}
     >
       <label className=" font-bold ms-2">
         {title ? title : "Pass a title"}
