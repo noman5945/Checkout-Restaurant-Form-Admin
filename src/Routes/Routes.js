@@ -6,6 +6,7 @@ import SocialMedia from "../pages/SocialMedia";
 import AddAgent from "../pages/AddAgent";
 import Login from "../pages/Login";
 import UpdatePassword from "../pages/UpdatePassword";
+import Dashboard from "../pages/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <Dashboard></Dashboard>,
+      },
+      {
+        path: "/general-info",
         element: <GeneralDetails></GeneralDetails>,
       },
       {

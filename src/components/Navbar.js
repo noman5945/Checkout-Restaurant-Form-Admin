@@ -9,7 +9,7 @@ const Navbar = () => {
         <img src={toplogo} alt="Checkout" className=" h-[90px] w-[250px]" />
       </div>
       <div className=" flex flex-row w-[100px]">
-        <CustomButton title={"Log Out"} btnFn={() => {}} />
+        <CustomButton title={"Log In"} btnFn={() => {}} />
       </div>
     </div>
   );
