@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
+import { AuthContext } from "../Providers/AuthProvider";
+import CustomLoader from "../components/CustomLoader";
+import { useNavigate } from "react-router-dom";
 
 const AddAgent = () => {
   const [agentName, setAgentName] = useState("");
@@ -8,23 +11,56 @@ const AddAgent = () => {
   const [agentLocation, setLocation] = useState("");
   const [agentEmail, setEmail] = useState("");
   const [agentPassword, setPassword] = useState("");
+  const { createNewUser, setLoading, loading } = useContext(AuthContext);
+  const userType = "Agent";
+  const navigate = useNavigate();
 
   const handleAddNewAgent = (e) => {
     e.preventDefault();
     try {
-      const agentInfo = {
+      const agentInfoObj = {
         name: agentName,
         phoneNo: agentPhone,
         opLocation: agentLocation,
         email: agentEmail,
         inital_pass: agentPassword,
+        user_type: userType,
       };
-      console.log(agentInfo);
+
+      createNewUser(agentEmail, agentPassword)
+        .then((response) => {
+          setLoading(false);
+          console.log(response.user);
+
+          fetch(`http://localhost:5000/adduser`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(agentInfoObj),
+          })
+            .then((response) => response.json())
+            .then((_id) => {
+              if (_id.acknowledged) {
+                alert("User Added to Database");
+              } else {
+                alert("Databse Error!");
+              }
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode + " " + errorMessage);
+        });
+
+      //console.log(agentInfo);
     } catch (error) {
       console.log(error);
     }
     e.target.reset();
   };
+
   return (
     <div className=" flex flex-col">
       <div className=" text-center font-bold text-xl">
@@ -62,9 +98,22 @@ const AddAgent = () => {
             placeholder={"6 digit inital password"}
             onChangeFn={setPassword}
           />
-          <CustomButton title={"Add Agent"} type={"submit"} btnFn={() => {}} />
+          {loading ? (
+            <CustomLoader />
+          ) : (
+            <CustomButton
+              title={"Add Agent"}
+              type={"submit"}
+              btnFn={() => {}}
+            />
+          )}
         </form>
-        <CustomButton title={"Home"} btnFn={() => {}} />
+        <CustomButton
+          title={"Home"}
+          btnFn={() => {
+            navigate("/");
+          }}
+        />
       </div>
     </div>
   );
