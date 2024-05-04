@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login, setUser } = useContext(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -15,12 +17,17 @@ const Login = () => {
         email,
         password,
       };
-      /**
-       * To DO: Login with Firbase
-       */
-      console.log(userInfo);
+      login(email, password)
+        .then((response) => {
+          setUser(response.user);
+          navigate("/");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+      console.log(userInfo.email);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
     e.target.reset();
   };

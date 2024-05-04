@@ -7,6 +7,8 @@ import AddAgent from "../pages/AddAgent";
 import Login from "../pages/Login";
 import UpdatePassword from "../pages/UpdatePassword";
 import Dashboard from "../pages/Dashboard";
+import PrivateRoute from "./PrivateRoutes/PrivateRoute";
+import AdminRoute from "./PrivateRoutes/AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -19,19 +21,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "/general-info",
-        element: <GeneralDetails></GeneralDetails>,
+        element: (
+          <PrivateRoute>
+            <GeneralDetails></GeneralDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/foodmenu",
-        element: <FoodMenu></FoodMenu>,
+        element: (
+          <PrivateRoute>
+            <FoodMenu></FoodMenu>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/social",
-        element: <SocialMedia></SocialMedia>,
+        element: (
+          <PrivateRoute>
+            <SocialMedia></SocialMedia>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/add-new-agent",
-        element: <AddAgent></AddAgent>,
+        element: (
+          <AdminRoute>
+            <AddAgent></AddAgent>
+          </AdminRoute>
+        ),
       },
       {
         path: "/user-login",
@@ -39,7 +57,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/user-update-pass",
-        element: <UpdatePassword></UpdatePassword>,
+        element: (
+          <PrivateRoute>
+            <UpdatePassword></UpdatePassword>
+          </PrivateRoute>
+        ),
       },
     ],
   },

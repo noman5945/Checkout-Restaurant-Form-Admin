@@ -80,7 +80,13 @@ const SocialMedia = () => {
       <CustomModal isVisible={openModal} closeFn={() => setOpenModal(false)}>
         <div className=" flex flex-col items-center">
           <h2>Thank you for your contribution</h2>
-          <CustomButton title={"OK"} btnFn={() => setOpenModal(false)} />
+          <CustomButton
+            title={"OK"}
+            btnFn={() => {
+              setOpenModal(false);
+              navigator("/");
+            }}
+          />
         </div>
       </CustomModal>
     </>

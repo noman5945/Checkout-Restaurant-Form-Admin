@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const UpdatePassword = () => {
-  const [email, setEmail] = useState("");
+  const { user, updateUserPassword } = useContext(AuthContext);
+
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
   const navigate = useNavigate();
@@ -17,10 +19,17 @@ const UpdatePassword = () => {
         return;
       }
       const updatePassInfo = {
-        email,
+        email: user?.email,
         password,
       };
-      console.log(updatePassInfo);
+      updateUserPassword(password)
+        .then(() => {
+          navigate("/");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+      console.log(updatePassInfo.email);
     } catch (error) {
       console.log(error);
     }
@@ -33,11 +42,15 @@ const UpdatePassword = () => {
       </div>
       <div className=" my-5 flex flex-col px-2 gap-2 w-[420px]">
         <form onSubmit={(event) => handlePassChange(event)}>
-          <InputField
-            title={"User Email"}
-            placeholder={"user@gmail.com"}
-            onChangeFn={setEmail}
-          />
+          <div className=" my-2 text-lg">
+            <p className=" flex flex-col">
+              Current User Email:
+              <span className="bg-platinum p-2 rounded-md font-semibold">
+                {" "}
+                {user?.email}
+              </span>
+            </p>
+          </div>
           <InputField
             title={"New Password"}
             placeholder={"New 6 digit Password"}
@@ -49,7 +62,11 @@ const UpdatePassword = () => {
             onChangeFn={setCPassword}
           />
           <div className=" flex flex-col w-full gap-1">
-            <CustomButton title={"Login"} type={"submit"} btnFn={() => {}} />
+            <CustomButton
+              title={"Update Password"}
+              type={"submit"}
+              btnFn={() => {}}
+            />
             <CustomButton
               title={"Cancel"}
               btnFn={() => {
