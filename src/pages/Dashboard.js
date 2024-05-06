@@ -28,13 +28,22 @@ const Dashboard = () => {
           <p>Add New Restaurant</p>
         </div>
         {user?.email && isAdmin ? (
-          <div
-            className=" bg-platinum rounded-md w-[300px] h-[200px] p-2 flex flex-col shadow-md m-2 items-center cursor-pointer"
-            onClick={() => changePageFunction("/add-new-agent")}
-          >
-            <img src={addAgentpic} alt="add new agent" />
-            <p>Add New Agent</p>
-          </div>
+          <>
+            <div
+              className=" bg-platinum rounded-md w-[300px] h-[200px] p-2 flex flex-col shadow-md m-2 items-center cursor-pointer"
+              onClick={() => changePageFunction("/add-new-agent")}
+            >
+              <img src={addAgentpic} alt="add new agent" />
+              <p>Add New Agent</p>
+            </div>
+            <div
+              className=" bg-platinum rounded-md w-[300px] h-[200px] p-2 flex flex-col shadow-md m-2 items-center cursor-pointer"
+              onClick={() => changePageFunction("/users-list")}
+            >
+              <img src={addAgentpic} alt="Users List" />
+              <p>Users List</p>
+            </div>
+          </>
         ) : null}
 
         <div

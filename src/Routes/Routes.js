@@ -9,6 +9,7 @@ import UpdatePassword from "../pages/UpdatePassword";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "./PrivateRoutes/PrivateRoute";
 import AdminRoute from "./PrivateRoutes/AdminRoute";
+import AllUsers from "../pages/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AddAgent></AddAgent>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/users-list",
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
           </AdminRoute>
         ),
       },
