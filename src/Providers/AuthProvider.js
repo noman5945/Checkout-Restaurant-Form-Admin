@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return updatePassword(auth.currentUser, newpassword);
   };
-
+  const disableUser = () => {};
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
