@@ -32,7 +32,7 @@ const AddAgent = () => {
           setLoading(false);
           console.log(response.user);
 
-          fetch(`http://localhost:5000/adduser`, {
+          fetch(`https://check-out-express-server.vercel.app/adduser`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

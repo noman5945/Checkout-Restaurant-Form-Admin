@@ -10,7 +10,7 @@ const AllUsers = () => {
   const navigate = useNavigate();
   useEffect(() => {
     setLoader(true);
-    fetch("http://localhost:5000/get-all-users")
+    fetch("https://check-out-express-server.vercel.app/get-all-users")
       .then((response) => response.json())
       .then((resData) => {
         setLoader(false);

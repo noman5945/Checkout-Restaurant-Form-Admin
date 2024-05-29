@@ -30,7 +30,7 @@ const FoodMenu = () => {
       rest_ID: new_rest_ID,
       menu_list: foodMenu,
     };
-    fetch("http://localhost:5000/addfoodmenu", {
+    fetch("https://check-out-express-server.vercel.app/addfoodmenu", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

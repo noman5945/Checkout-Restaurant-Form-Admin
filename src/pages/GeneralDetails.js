@@ -35,7 +35,7 @@ const GeneralDetails = () => {
         mainFoods: foodTypes,
         workTime: workTime,
       };
-      fetch("http://localhost:5000/addrestaurant", {
+      fetch("https://check-out-express-server.vercel.app/addrestaurant", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

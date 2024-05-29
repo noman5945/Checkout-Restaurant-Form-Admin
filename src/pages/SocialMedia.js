@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 
 const SocialMedia = () => {
@@ -11,6 +11,7 @@ const SocialMedia = () => {
   const [phone, setPhone] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const { state } = useLocation();
+  const navigate = useNavigate();
   const { new_rest_ID } = state;
 
   const handleAddContacts = (event) => {
@@ -22,7 +23,7 @@ const SocialMedia = () => {
       facebook: facebook,
       instagram: instagram,
     };
-    fetch("http://localhost:5000/addsocial", {
+    fetch("https://check-out-express-server.vercel.app/addsocial", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +85,7 @@ const SocialMedia = () => {
             title={"OK"}
             btnFn={() => {
               setOpenModal(false);
-              navigator("/");
+              navigate("/");
             }}
           />
         </div>
