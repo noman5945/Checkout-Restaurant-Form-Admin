@@ -4,6 +4,7 @@ import CustomButton from "../components/CustomButton";
 import { AuthContext } from "../Providers/AuthProvider";
 import CustomLoader from "../components/CustomLoader";
 import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 
 const AddAgent = () => {
   const [agentName, setAgentName] = useState("");
@@ -14,6 +15,10 @@ const AddAgent = () => {
   const { createNewUser, setLoading, loading } = useContext(AuthContext);
   const userType = "Agent";
   const navigate = useNavigate();
+
+  const service_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+  const template_ID = process.env.REACT_APP_EMAILJS_AGENT_TEMPLATE_ID;
+  const public_key = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 
   const handleAddNewAgent = (e) => {
     e.preventDefault();
@@ -27,10 +32,16 @@ const AddAgent = () => {
         user_type: userType,
       };
 
+      const emailParams = {
+        to_email: agentEmail,
+        to_name: agentName,
+        from_name: "checkout-admin",
+        message: `Your account has been created and this is your password ${agentPassword}`,
+      };
+
       createNewUser(agentEmail, agentPassword)
         .then((response) => {
           setLoading(false);
-          console.log(response.user);
 
           fetch(`https://check-out-express-server.vercel.app/adduser`, {
             method: "POST",
@@ -43,6 +54,20 @@ const AddAgent = () => {
             .then((_id) => {
               if (_id.acknowledged) {
                 alert("User Added to Database");
+                emailjs
+                  .send(service_ID, template_ID, emailParams, public_key)
+                  .then(
+                    (response) => {
+                      alert(
+                        "SUCCESS! Email Sent",
+                        response.status,
+                        response.text
+                      );
+                    },
+                    (error) => {
+                      console.log("FAILED...", error);
+                    }
+                  );
               } else {
                 alert("Databse Error!");
               }
@@ -51,7 +76,7 @@ const AddAgent = () => {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode + " " + errorMessage);
+          alert(errorCode + " " + errorMessage);
         });
 
       //console.log(agentInfo);
